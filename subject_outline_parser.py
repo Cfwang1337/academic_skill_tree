@@ -24,6 +24,9 @@ deduplicate_list = []
 
 for item in source_contents:
     if item.endswith('.html'):
+        item_name = item.replace('.html',"")
+        item_name = item_name.replace('Outline_of_',"")
+        item_name = item_name.title()
         souper = open(item,'r').read()
         souper = BeautifulSoup(souper)
         #print souper
@@ -43,6 +46,7 @@ for item in source_contents:
                         if str(name) == str(text_name) and "Outline" not in name and name not in deduplicate_list:
                             print name,"|",text_name,"|",url
                             item_dict = dict(
+                                item_name=item_name,
                                 name=name,
                                 url=url,
                             )
@@ -56,10 +60,10 @@ for item in source_contents:
 print len(master_list)
 
 c = csv.writer(open("ancillary_list_fields.csv", "wb"))
-c.writerow(["field","link",])
+c.writerow(["origin","field","link",])
 
 for item in master_list:
-    c.writerow([item['name'],item['url']])
+    c.writerow([item['item_name'],item['name'],item['url']])
 
 
 print ""
