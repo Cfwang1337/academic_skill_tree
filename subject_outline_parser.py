@@ -64,7 +64,14 @@ c.writerow(["origin","field","link",])
 
 for item in master_list:
     c.writerow([item['item_name'],item['name'],item['url']])
-
+    url = item['url']
+    name = item['name']
+    page = requests.get(url,timeout=30)
+    souper = BeautifulSoup(page.content)
+    souper = str(souper)
+    filename = str(name.replace(' ','_')) + ".html"
+    open(filename,'w').write(souper)
+    print filename,"FILE SAVED"
 
 print ""
 print ""
