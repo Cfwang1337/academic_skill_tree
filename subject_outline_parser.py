@@ -62,6 +62,8 @@ print len(master_list)
 c = csv.writer(open("ancillary_list_fields.csv", "wb"))
 c.writerow(["origin","field","link",])
 
+fail_list = []
+
 for item in master_list:
     c.writerow([item['item_name'],item['name'],item['url']])
     url = item['url']
@@ -70,8 +72,21 @@ for item in master_list:
     souper = BeautifulSoup(page.content)
     souper = str(souper)
     filename = str(name.replace(' ','_')) + ".html"
-    open(filename,'w').write(souper)
-    print filename,"FILE SAVED"
+    file_path = source_path + "/" + filename
+    if path.exists(file_path):
+        print "Already exists"
+        continue
+    else:
+        try:
+            open(filename,'w').write(souper)
+            print filename,"FILE SAVED"
+        except:
+            fail_list.append(filename)
+            pass
+
+print fail_list
+
+print len(fail_list)
 
 print ""
 print ""
