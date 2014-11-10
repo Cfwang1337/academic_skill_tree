@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-# PROCEDURE: Read from list of URLS -> grab first two paragraphs
-import time
 import datetime
-import re
 from bs4 import BeautifulSoup
-import itertools
-from multiprocessing import Pool
 import requests
-from os import path, pardir, makedirs, chdir, remove, getcwd
+from os import path, chdir, getcwd
 import csv
 
 start_time = datetime.datetime.now().time().isoformat()
@@ -58,7 +53,7 @@ c = csv.writer(open("outline_list_fields.csv", "wb"))
 c.writerow(["field","link",])
 
 print len(outline_list)
-#raw_input()
+
 
 for item in outline_list:
     c.writerow([item['name'],item['url']])
